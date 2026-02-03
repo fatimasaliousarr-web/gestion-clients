@@ -5,8 +5,9 @@ const addBtn = document.getElementById("addBtn");
 const clientList = document.getElementById("clientList");
 
 let clients = [];
+let editIndex = null;
 
-/* Ajouter client */
+/* Ajouter ou modifier */
 addBtn.addEventListener("click", function () {
 
   const name = nameInput.value;
@@ -18,13 +19,14 @@ addBtn.addEventListener("click", function () {
     return;
   }
 
-  const client = {
-    name,
-    email,
-    phone
-  };
+  if(editIndex === null){
+    clients.push({ name, email, phone });
+  } else {
+    clients[editIndex] = { name, email, phone };
+    editIndex = null;
+    addBtn.textContent = "Ajouter";
+  }
 
-  clients.push(client);
   displayClients();
   clearInputs();
 });
@@ -42,6 +44,7 @@ function displayClients(){
       <td>${client.email}</td>
       <td>${client.phone}</td>
       <td>
+        <button class="action-btn" onclick="editClient(${index})">Modifier</button>
         <button class="action-btn" onclick="deleteClient(${index})">Supprimer</button>
       </td>
     `;
@@ -50,16 +53,27 @@ function displayClients(){
   });
 }
 
+/* Modifier */
+function editClient(index){
+  const client = clients[index];
+
+  nameInput.value = client.name;
+  emailInput.value = client.email;
+  phoneInput.value = client.phone;
+
+  editIndex = index;
+  addBtn.textContent = "Modifier";
+}
+
 /* Supprimer */
 function deleteClient(index){
   clients.splice(index,1);
   displayClients();
 }
 
-/* Reset form */
+/* Reset */
 function clearInputs(){
   nameInput.value="";
   emailInput.value="";
   phoneInput.value="";
 }
-
