@@ -4,83 +4,26 @@ const phoneInput = document.getElementById("phone");
 const addBtn = document.getElementById("addBtn");
 const clientList = document.getElementById("clientList");
 
-let clients = JSON.parse(localStorage.getItem("clients")) || [];
-let editIndex = null;
+addBtn.addEventListener("click", async () => {
 
-/* Charger au démarrage */
-displayClients();
+  const client = {
+    name: nameInput.value,
+    email: emailInput.value,
+    phone: phoneInput.value
+  };
 
-/* Ajouter / Modifier */
-addBtn.addEventListener("click", function () {
-
-  const name = nameInput.value;
-  const email = emailInput.value;
-  const phone = phoneInput.value;
-
-  if(name === "" || email === "" || phone === ""){
-    alert("Veuillez remplir tous les champs");
-    return;
-  }
-
-  if(editIndex === null){
-    clients.push({ name, email, phone });
-  } else {
-    clients[editIndex] = { name, email, phone };
-    editIndex = null;
-    addBtn.textContent = "Ajouter";
-  }
-
-  saveClients();
-  displayClients();
-  clearInputs();
-});
-
-/* Affichage */
-function displayClients(){
-  clientList.innerHTML = "";
-
-  clients.forEach((client, index) => {
-    const row = document.createElement("tr");
-
-    row.innerHTML = `
-      <td>${client.name}</td>
-      <td>${client.email}</td>
-      <td>${client.phone}</td>
-      <td>
-        <button class="action-btn" onclick="editClient(${index})">Modifier</button>
-        <button class="action-btn" onclick="deleteClient(${index})">Supprimer</button>
-      </td>
-    `;
-
-    clientList.appendChild(row);
+  const response = await fetch("http://localhost:3000/clients", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(client)
   });
-}
 
-/* Modifier */
-function editClient(index){
-  const client = clients[index];
-  nameInput.value = client.name;
-  emailInput.value = client.email;
-  phoneInput.value = client.phone;
-  editIndex = index;
-  addBtn.textContent = "Modifier";
-}
+  const message = await response.text();
+  alert(message);
 
-/* Supprimer */
-function deleteClient(index){
-  clients.splice(index,1);
-  saveClients();
-  displayClients();
-}
-
-/* Sauvegarde */
-function saveClients(){
-  localStorage.setItem("clients", JSON.stringify(clients));
-}
-
-/* Reset */
-function clearInputs(){
-  nameInput.value="";
-  emailInput.value="";
-  phoneInput.value="";
-}
+  nameInput.value = "";
+  emailInput.value = "";
+  phoneInput.value = "";
+});
