@@ -4,10 +4,13 @@ const phoneInput = document.getElementById("phone");
 const addBtn = document.getElementById("addBtn");
 const clientList = document.getElementById("clientList");
 
-let clients = [];
+let clients = JSON.parse(localStorage.getItem("clients")) || [];
 let editIndex = null;
 
-/* Ajouter ou modifier */
+/* Charger au démarrage */
+displayClients();
+
+/* Ajouter / Modifier */
 addBtn.addEventListener("click", function () {
 
   const name = nameInput.value;
@@ -27,6 +30,7 @@ addBtn.addEventListener("click", function () {
     addBtn.textContent = "Ajouter";
   }
 
+  saveClients();
   displayClients();
   clearInputs();
 });
@@ -36,7 +40,6 @@ function displayClients(){
   clientList.innerHTML = "";
 
   clients.forEach((client, index) => {
-
     const row = document.createElement("tr");
 
     row.innerHTML = `
@@ -56,11 +59,9 @@ function displayClients(){
 /* Modifier */
 function editClient(index){
   const client = clients[index];
-
   nameInput.value = client.name;
   emailInput.value = client.email;
   phoneInput.value = client.phone;
-
   editIndex = index;
   addBtn.textContent = "Modifier";
 }
@@ -68,7 +69,13 @@ function editClient(index){
 /* Supprimer */
 function deleteClient(index){
   clients.splice(index,1);
+  saveClients();
   displayClients();
+}
+
+/* Sauvegarde */
+function saveClients(){
+  localStorage.setItem("clients", JSON.stringify(clients));
 }
 
 /* Reset */
