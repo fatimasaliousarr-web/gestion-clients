@@ -30,6 +30,8 @@ async function loadClients() {
 
 // Ajouter client
 addBtn.addEventListener("click", async () => {
+  console.log("Bouton cliqué");
+
 
   const client = {
     name: nameInput.value,
