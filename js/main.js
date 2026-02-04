@@ -1,15 +1,33 @@
-alert("JS bien chargé");
-// Récupération des éléments HTML
 const nameInput = document.getElementById("name");
 const emailInput = document.getElementById("email");
 const phoneInput = document.getElementById("phone");
 const addBtn = document.getElementById("addBtn");
 const clientList = document.getElementById("clientList");
 
+const API_URL = "http://localhost:3000/clients";
 
-// ==============================
-// AJOUTER UN CLIENT
-// ==============================
+// Charger les clients
+async function loadClients() {
+  const res = await fetch(API_URL);
+  const data = await res.json();
+
+  clientList.innerHTML = "";
+
+  data.forEach(client => {
+    clientList.innerHTML += `
+      <tr>
+        <td>${client.name}</td>
+        <td>${client.email}</td>
+        <td>${client.phone}</td>
+        <td>
+          <button>Supprimer</button>
+        </td>
+      </tr>
+    `;
+  });
+}
+
+// Ajouter client
 addBtn.addEventListener("click", async () => {
 
   const client = {
@@ -18,12 +36,7 @@ addBtn.addEventListener("click", async () => {
     phone: phoneInput.value
   };
 
-  if(!client.name || !client.email || !client.phone){
-    alert("Veuillez remplir tous les champs");
-    return;
-  }
-
-  await fetch("http://localhost:3000/clients", {
+  const response = await fetch(API_URL, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -31,55 +44,15 @@ addBtn.addEventListener("click", async () => {
     body: JSON.stringify(client)
   });
 
-  // Recharger la liste
-  loadClients();
+  const message = await response.text();
+  alert(message);
 
-  // Vider les champs
   nameInput.value = "";
   emailInput.value = "";
   phoneInput.value = "";
-});
-
-
-// ==============================
-// CHARGER LES CLIENTS
-// ==============================
-async function loadClients() {
-  const response = await fetch("http://localhost:3000/clients");
-  const clients = await response.json();
-
-  clientList.innerHTML = "";
-
-  clients.forEach(client => {
-    const row = document.createElement("tr");
-
-    row.innerHTML = `
-      <td>${client.name}</td>
-      <td>${client.email}</td>
-      <td>${client.phone}</td>
-      <td>
-        <button onclick="deleteClient(${client.id})">Supprimer</button>
-      </td>
-    `;
-
-    clientList.appendChild(row);
-  });
-}
-
-
-// ==============================
-// SUPPRIMER CLIENT
-// ==============================
-async function deleteClient(id) {
-  await fetch(`http://localhost:3000/clients/${id}`, {
-    method: "DELETE"
-  });
 
   loadClients();
-}
+});
 
-
-// ==============================
-// LANCEMENT AU CHARGEMENT
-// ==============================
+// Charger au démarrage
 loadClients();
