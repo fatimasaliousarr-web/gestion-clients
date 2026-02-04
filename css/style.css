@@ -112,3 +112,39 @@ background:#ef4444;
 .action-btn:hover{
 opacity:0.8;
 }
+button {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  background: #8b5cf6;
+  color: white;
+  cursor: pointer;
+  margin: 2px;
+}
+
+button:hover {
+  background: #7c3aed;
+}
+
+input {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 12px;
+  text-align: center;
+}
+
+tr:nth-child(even) {
+  background: rgba(255,255,255,0.05);
+}
+
