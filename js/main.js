@@ -1,4 +1,4 @@
-alert("JS chargé");
+alert("JS bien chargé");
 // Récupération des éléments HTML
 const nameInput = document.getElementById("name");
 const emailInput = document.getElementById("email");
