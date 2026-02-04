@@ -1,3 +1,4 @@
+alert("JS chargé");
 // Récupération des éléments HTML
 const nameInput = document.getElementById("name");
 const emailInput = document.getElementById("email");
