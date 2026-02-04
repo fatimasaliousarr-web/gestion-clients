@@ -6,7 +6,8 @@ const phoneInput = document.getElementById("phone");
 const addBtn = document.getElementById("addBtn");
 const clientList = document.getElementById("clientList");
 
-const API_URL = "http://localhost:3000/clients";
+const API_URL = "https://gestion-clients-backend.onrender.com/clients";
+
 
 let selectedClientId = null;
 
