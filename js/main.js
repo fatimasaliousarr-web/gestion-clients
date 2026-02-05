@@ -35,36 +35,30 @@ async function loadClients() {
 }
 
 /* =======================
-   AJOUTER CLIENT
+   AJOUTER / MODIFIER CLIENT
 ======================= */
 addBtn.addEventListener("click", async () => {
 
-  if (selectedClientId === null) {
-    const client = {
-      name: nameInput.value,
-      email: emailInput.value,
-      phone: phoneInput.value
-    };
+  const client = {
+    name: nameInput.value,
+    email: emailInput.value,
+    phone: phoneInput.value
+  };
 
+  if (selectedClientId === null) {
+    // AJOUT
     const res = await fetch(API_URL, {
       method: "POST",
-      headers: {"Content-Type": "application/json"},
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(client)
     });
 
     alert(await res.text());
-  } 
-  else {
-    // MODE MODIFICATION
-    const client = {
-      name: nameInput.value,
-      email: emailInput.value,
-      phone: phoneInput.value
-    };
-
+  } else {
+    // MODIFICATION
     const res = await fetch(`${API_URL}/${selectedClientId}`, {
       method: "PUT",
-      headers: {"Content-Type": "application/json"},
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(client)
     });
 
@@ -92,7 +86,7 @@ function editClient(id, name, email, phone) {
 }
 
 /* =======================
-   SUPPRIMER
+   SUPPRIMER CLIENT
 ======================= */
 async function deleteClient(id) {
   if (!confirm("Supprimer ce client ?")) return;
@@ -105,4 +99,7 @@ async function deleteClient(id) {
   loadClients();
 }
 
+/* =======================
+   LANCEMENT
+======================= */
 loadClients();
