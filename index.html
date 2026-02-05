@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Gestion Clients</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<h1>Application de Gestion des Clients</h1>
+
+<section class="form-section">
+
+  <h2>Ajouter un client</h2>
+
+  <input type="text" id="name" placeholder="Nom">
+  <input type="email" id="email" placeholder="Email">
+  <input type="text" id="phone" placeholder="Téléphone">
+
+  <button id="addBtn">Ajouter</button>
+
+</section>
+
+<section class="list-section">
+
+  <h2>Liste des clients</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Email</th>
+        <th>Téléphone</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="clientList">
+    </tbody>
+  </table>
+
+</section>
+
+<script src="js/main.js"></script>
+</body>
+</html>
+
