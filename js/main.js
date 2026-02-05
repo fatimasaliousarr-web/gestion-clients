@@ -9,6 +9,7 @@ const clientList = document.getElementById("clientList");
 const API_URL = "https://gestion-clients-backend.onrender.com/clients";
 
 
+
 let selectedClientId = null;
 
 /* =======================
